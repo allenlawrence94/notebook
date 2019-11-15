@@ -1,0 +1,15 @@
+{%  extends "page.html" %}
+
+{% block title %}{{page_title}}{% endblock %}
+
+<div id="table"></div>
+
+{% block script %}
+    {{super()}}
+
+<script src="https://cdn.jsdelivr.net/npm/handsontable@7.2.2/dist/handsontable.full.min.js"></script>
+<script src="{{ static_url("spreadsheet/js/main.min.js") }}" type="text/javascript" charset="utf-8"></script>
+
+{#<script src="javascript/table.js"></script>#}
+{% endblock %}
+<link href="https://cdn.jsdelivr.net/npm/handsontable@7.2.2/dist/handsontable.full.min.css" rel="stylesheet" media="screen">

@@ -297,6 +297,7 @@ class NotebookWebApplication(web.Application):
         handlers.extend(load_handlers('notebook.files.handlers'))
         handlers.extend(load_handlers('notebook.view.handlers'))
         handlers.extend(load_handlers('notebook.notebook.handlers'))
+        handlers.extend(load_handlers('notebook.spreadsheet.handlers'))
         handlers.extend(load_handlers('notebook.nbconvert.handlers'))
         handlers.extend(load_handlers('notebook.bundler.handlers'))
         handlers.extend(load_handlers('notebook.kernelspecs.handlers'))
