@@ -1,5 +1,5 @@
 from ..base.handlers import path_regex, IPythonHandler
-from tornado import web
+from tornado import web, gen
 from notebook.utils import maybe_future
 import json
 
@@ -7,6 +7,7 @@ import json
 class SpreadsheetHandler(IPythonHandler):
 
     @web.authenticated
+    @gen.coroutine
     def get(self, path):
         # /files/ requests must originate from the same site
         self.check_xsrf_cookie()
@@ -27,12 +28,12 @@ class SpreadsheetHandler(IPythonHandler):
         if self.get_argument("download", False):
             self.set_attachment_header(name)
 
-        self.set_header('Content-Type', 'application/json')
+        self.set_header('Content-Type', 'text/html')
 
         self.write(
             self.render_template(
                 'spreadsheet.html',
-                spreadsheet_data=json.dumps(model['content'])
+                spreadsheet_data=model['content']
                 # notebook_name=name,
                 # kill_kernel=False,
                 # mathjax_url=self.mathjax_url,
@@ -40,6 +41,9 @@ class SpreadsheetHandler(IPythonHandler):
                 # get_frontend_exporters=get_frontend_exporters
             )
         )
+
+    def check_referer(self):
+        return True
 
 
 default_handlers = [

@@ -1,15 +1,26 @@
-{%  extends "page.html" %}
+{#{%  extends "page.html" %}#}
 
-{% block title %}{{page_title}}{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 <div id="table"></div>
 
-{% block script %}
-    {{super()}}
+{#{% block script %}#}
+{#    {{super()}}#}
 
 <script src="https://cdn.jsdelivr.net/npm/handsontable@7.2.2/dist/handsontable.full.min.js"></script>
-<script src="{{ static_url("spreadsheet/js/main.min.js") }}" type="text/javascript" charset="utf-8"></script>
+<script>
+    let container = document.getElementById("table");
+    let data = JSON.parse({{ spreadsheet_data | tojson | safe }});
+    console.log(data);
+    let hot = new Handsontable(container, {
+      data: data,
+      rowHeaders: true,
+      colHeaders: true,
+      filters: true,
+      dropdownMenu: true
+    });
+</script>
+{#{% endblock %}#}
 
 {#<script src="javascript/table.js"></script>#}
-{% endblock %}
 <link href="https://cdn.jsdelivr.net/npm/handsontable@7.2.2/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
